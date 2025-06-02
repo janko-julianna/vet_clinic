@@ -24,9 +24,6 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-        textarea {
-            resize: none;
-        }
     </style>
 </head>
 <body>
@@ -34,7 +31,7 @@
     <?php
     include_once "Animals.php";
     $todo = $_GET['todo'] ?? 'list';
-    $animalsModel = new Animals("localhost", "root", "", "vet_clinic");
+    $animalsModel = new Animals("localhost", "root", "", "vet_clinic_1");
 
     switch ($todo) {
         case 'list':
@@ -52,13 +49,20 @@
             $notes = htmlspecialchars($_POST['notes']);
             $animalsModel->addAnimal($name, $species, $birthdate, $vaccinated, $next_checkup, $notes);
             header("Location: index.php");
-            break;
+            exit;
         case 'setVaccinated':
             $id = intval($_GET['id']);
             $animalsModel->setVaccinated($id);
             header("Location: index.php");
-            break;
-    }
+            exit;
+        case 'checkup':
+            $id = intval($_GET['nev']);
+            echo "<div class='alert alert-info'>Állat ID $id kivizsgálásra küldve (itt lehetne időpontot módosítani).</div>";
+            echo "<a href='index.php' class='btn btn-secondary mt-3'>Vissza a listához</a>";
+            exit;
+            
+        }
+
     ?>
 </div>
 </body>

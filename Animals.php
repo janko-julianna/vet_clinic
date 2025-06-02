@@ -14,6 +14,10 @@ class Animals {
     function getAnimals() {
         $sql = "SELECT * FROM animals";
         $result = $this->conn->query($sql);
+        if (!$result) {
+            echo "<div class='alert alert-danger'>Hiba történt: " . $this->conn->error . "</div>";
+            return [];
+        }
         $animals = [];
         while ($row = $result->fetch_object()) {
             $animals[] = new Animal(
@@ -36,11 +40,12 @@ class Animals {
     }
 
     function setVaccinated($id) {
-        $sql = "UPDATE animals SET vaccinated = 1 WHERE id = ?";
-        $stmt = $this->conn->prepare($sql);
+        $stmt = $this->conn->prepare("UPDATE animals SET vaccinated = 1 WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
     }
+
+    
+    
 }
 ?>
-

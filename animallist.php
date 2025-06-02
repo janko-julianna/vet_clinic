@@ -1,13 +1,13 @@
-<h2>Állatorvosi nyilvántartás</h2>
-<a href='?todo=new' class='btn btn-success mb-3'>➕ Új állat felvétele</a>
+<h2>Állatok listája</h2>
+<a href="?todo=new" class="btn btn-primary mb-3">Új állat felvétele</a>
 
-<table class='table table-hover table-bordered align-middle'>
-    <thead class="table-light">
+<table class="table table-striped">
+    <thead>
         <tr>
             <th>ID</th>
             <th>Név</th>
             <th>Faj</th>
-            <th>Születés</th>
+            <th>Születési dátum</th>
             <th>Oltott?</th>
             <th>Következő vizsgálat</th>
             <th>Megjegyzés</th>
@@ -15,19 +15,24 @@
         </tr>
     </thead>
     <tbody>
-        <?php
-        foreach ($animals as $animal) {
-            echo "<tr>
-                <td>$animal->id</td>
-                <td><strong>$animal->name</strong></td>
-                <td>$animal->species</td>
-                <td>" . date("Y. m. d", strtotime($animal->birthdate)) . "</td>
-                <td>" . ($animal->vaccinated ? "<span class='badge bg-success'>Igen</span>" : "<span class='badge bg-danger'>Nem</span>") . "</td>
-                <td>" . ($animal->next_checkup ? date("Y. m. d H:i", strtotime($animal->next_checkup)) : "-") . "</td>
-                <td>" . nl2br(htmlspecialchars($animal->notes)) . "</td>
-                <td>" . (!$animal->vaccinated ? "<a href='?todo=setVaccinated&id=$animal->id' class='btn btn-outline-primary btn-sm'>Beoltva</a>" : "✔️") . "</td>
-            </tr>";
-        }
-        ?>
+        <?php foreach ($animalsModel->getAnimals() as $animal): ?>
+            <tr>
+                <td><?= $animal->id ?></td>
+                <td><?= htmlspecialchars($animal->name) ?></td>
+                <td><?= htmlspecialchars($animal->species) ?></td>
+                <td><?= htmlspecialchars($animal->birthdate) ?></td>
+                <td><?= $animal->vaccinated ? "Igen" : "Nem" ?></td>
+                <td><?= htmlspecialchars($animal->next_checkup) ?></td>
+                <td><?= htmlspecialchars($animal->notes) ?></td>
+                <td>
+                    <?php if (!$animal->vaccinated): ?>
+                        <a href="?todo=setVaccinated&id=<?= $animal->id ?>" class="btn btn-success btn-sm">Oltás</a>
+                        <a href="?todo=delete&id=<?= $animal->id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Biztos törlöd?');">Törlés</a>
+                    <?php else: ?>
+                        <a href="?todo=checkup&id=<?= $animal->id ?>" class="btn btn-info btn-sm">Kivizsgálás</a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
     </tbody>
 </table>
