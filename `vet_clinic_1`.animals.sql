@@ -1,9 +1,11 @@
 ﻿CREATE TABLE `vet_clinic_1`.animals (
-  id INT(11) DEFAULT NULL,
-  name VARCHAR(50) DEFAULT NULL,
-  species VARCHAR(255) DEFAULT NULL,
-  birthdate DATE DEFAULT NULL,
-  vaccinated TINYINT(1) DEFAULT NULL
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  species VARCHAR(50) NOT NULL,
+  birthdate DATE NOT NULL,
+  vaccinated BOOLEAN DEFAULT FALSE,
+  next_checkup DATETIME,
+  notes TEXT
 )
 ENGINE = INNODB,
 CHARACTER SET utf8mb4,
