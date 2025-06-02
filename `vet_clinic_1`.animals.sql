@@ -1,0 +1,10 @@
+﻿CREATE TABLE `vet_clinic_1`.animals (
+  id INT(11) DEFAULT NULL,
+  name VARCHAR(50) DEFAULT NULL,
+  species VARCHAR(255) DEFAULT NULL,
+  birthdate DATE DEFAULT NULL,
+  vaccinated TINYINT(1) DEFAULT NULL
+)
+ENGINE = INNODB,
+CHARACTER SET utf8mb4,
+COLLATE utf8mb4_general_ci;
