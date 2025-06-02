@@ -12,12 +12,7 @@ class Animals {
     }
 
     function getAnimals() {
-        $sql = "SELECT * FROM animals";
-        $result = $this->conn->query($sql);
-        if (!$result) {
-            echo "<div class='alert alert-danger'>Hiba történt: " . $this->conn->error . "</div>";
-            return [];
-        }
+        $result = $this->conn->query("SELECT * FROM animals");
         $animals = [];
         while ($row = $result->fetch_object()) {
             $animals[] = new Animal(
@@ -33,19 +28,35 @@ class Animals {
         return $animals;
     }
 
-    function addAnimal($name, $species, $birthdate, $vaccinated, $next_checkup, $notes) {
+    function addAnimal($name, $species, $birthdate, $vaccinated, $next, $notes) {
         $stmt = $this->conn->prepare("INSERT INTO animals (name, species, birthdate, vaccinated, next_checkup, notes) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssiss", $name, $species, $birthdate, $vaccinated, $next_checkup, $notes);
+        $stmt->bind_param("sssiss", $name, $species, $birthdate, $vaccinated, $next, $notes);
         $stmt->execute();
     }
 
-    function setVaccinated($id) {
-        $stmt = $this->conn->prepare("UPDATE animals SET vaccinated = 1 WHERE id = ?");
-        $stmt->bind_param("i", $id);
+    function getAnimalByName($name) {
+        $stmt = $this->conn->prepare("SELECT * FROM animals WHERE name = ? LIMIT 1");
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_object();
+    }
+
+    function setVaccinatedByName($name) {
+        $stmt = $this->conn->prepare("UPDATE animals SET vaccinated = 1 WHERE name = ?");
+        $stmt->bind_param("s", $name);
         $stmt->execute();
     }
 
-    
-    
+    function deleteAnimalByName($name) {
+        $stmt = $this->conn->prepare("DELETE FROM animals WHERE name = ?");
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+    }
+
+    function addCheckupNote($name, $note, $nextCheckup) {
+        $stmt = $this->conn->prepare("UPDATE animals SET notes = CONCAT(notes, '\nKivizsgálás: ', ?), next_checkup = ? WHERE name = ?");
+        $stmt->bind_param("sss", $note, $nextCheckup, $name);
+        $stmt->execute();
+    }
 }
 ?>
