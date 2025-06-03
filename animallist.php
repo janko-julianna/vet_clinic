@@ -18,12 +18,14 @@
             <td><?= $animal->next_checkup ?></td>
             <td><pre><?= htmlspecialchars($animal->notes) ?></pre></td>
             <td>
-                <?php if (!$animal->vaccinated): ?>
-                    <a href="?todo=setVaccinated&name=<?= urlencode($animal->name) ?>" class="btn btn-success btn-sm">Oltás</a>
-                    <a href="?todo=delete&name=<?= urlencode($animal->name) ?>" class="btn btn-danger btn-sm">Törlés</a>
-                <?php else: ?>
-                    <a href="?todo=checkup&name=<?= urlencode($animal->name) ?>" class="btn btn-info btn-sm">Kivizsgálás</a>
-                <?php endif; ?>
+            <?php if (!$animal->vaccinated): ?>
+                <a href="?todo=setVaccinated&name=<?= urlencode($animal->name) ?>" class="btn btn-success btn-sm">Oltás</a>
+                <a href="?todo=delete&name=<?= urlencode($animal->name) ?>" class="btn btn-danger btn-sm">Törlés</a>
+            <?php else: ?>
+                <a href="?todo=checkup&name=<?= urlencode($animal->name) ?>" class="btn btn-info btn-sm">Kivizsgálás</a>
+                <a href="?todo=delete&name=<?= urlencode($animal->name) ?>" class="btn btn-danger btn-sm">Törlés</a>
+            <?php endif; ?>
+
             </td>
         </tr>
         <?php endforeach; ?>
