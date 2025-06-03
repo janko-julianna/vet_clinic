@@ -1,36 +1,38 @@
-<h2 class="my-3">Új állat felvétele</h2>
+<h2 class="mb-4 text-center">Új állat felvétele</h2>
 
-<form method="POST" action="?todo=add">
+<form method="POST" action="?todo=add" class="p-4 bg-light rounded shadow-sm" style="max-width: 600px; margin: auto;">
   <div class="mb-3">
-    <label for="name" class="form-label">Név</label>
-    <input type="text" class="form-control" id="name" name="name" required>
+    <label for="name" class="form-label fw-semibold">Név</label>
+    <input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Állat neve" required>
   </div>
 
   <div class="mb-3">
-    <label for="species" class="form-label">Fajta</label>
-    <input type="text" class="form-control" id="species" name="species" required>
+    <label for="species" class="form-label fw-semibold">Fajta</label>
+    <input type="text" class="form-control form-control-lg" id="species" name="species" placeholder="Pl. Kutya, Macska" required>
   </div>
 
   <div class="mb-3">
-    <label for="birthdate" class="form-label">Születési dátum</label>
-    <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+    <label for="birthdate" class="form-label fw-semibold">Születési dátum</label>
+    <input type="date" class="form-control form-control-lg" id="birthdate" name="birthdate" required>
   </div>
 
-  <div class="form-check mb-3">
-    <input type="checkbox" class="form-check-input" id="vaccinated" name="vaccinated" value="1">
+  <div class="form-check form-switch mb-3">
+    <input class="form-check-input" type="checkbox" id="vaccinated" name="vaccinated" value="1">
     <label class="form-check-label" for="vaccinated">Oltott</label>
   </div>
 
   <div class="mb-3">
-    <label for="next_checkup" class="form-label">Következő vizsgálat dátuma</label>
-    <input type="date" class="form-control" id="next_checkup" name="next_checkup">
+    <label for="next_checkup" class="form-label fw-semibold">Következő vizsgálat dátuma</label>
+    <input type="date" class="form-control form-control-lg" id="next_checkup" name="next_checkup">
   </div>
 
   <div class="mb-3">
-    <label for="notes" class="form-label">Megjegyzés</label>
-    <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+    <label for="notes" class="form-label fw-semibold">Megjegyzés</label>
+    <textarea class="form-control form-control-lg" id="notes" name="notes" rows="4" placeholder="Ide írd a megjegyzést..."></textarea>
   </div>
 
-  <button type="submit" class="btn btn-primary">Felvesz</button>
-  <a href="index.php" class="btn btn-secondary ms-2">Mégse</a>
+  <div class="d-grid gap-2">
+    <button type="submit" class="btn btn-primary btn-lg fw-semibold">Felvesz</button>
+    <a href="index.php" class="btn btn-outline-secondary btn-lg">Mégse</a>
+  </div>
 </form>
