@@ -11,7 +11,7 @@ Ez a program egy állatorvosi rendelő digitális nyilvántartására szolgál. 
 1. **Állat adatainak rögzítése**
    - Név
    - Faj
-   - Születési dátum (nem lehet jövőbeni)
+   - Születési dátum
    - Oltott állapot
    - Következő vizsgálat dátuma
    - Megjegyzések
