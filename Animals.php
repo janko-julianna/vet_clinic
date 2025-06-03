@@ -54,9 +54,17 @@ class Animals {
     }
 
     function addCheckupNote($name, $note, $nextCheckup) {
-        $stmt = $this->conn->prepare("UPDATE animals SET notes = CONCAT(notes, '\nKivizsgálás: ', ?), next_checkup = ? WHERE name = ?");
-        $stmt->bind_param("sss", $note, $nextCheckup, $name);
+        $today = date("Y-m-d");
+        $fullNote = "Kivizsgálás ($today): $note";
+        $stmt = $this->conn->prepare("UPDATE animals SET notes = CONCAT(notes, '\n', ?), next_checkup = ? WHERE name = ?");
+        $stmt->bind_param("sss", $fullNote, $nextCheckup, $name);
         $stmt->execute();
     }
+    function addVaccinationNote($name, $note) {
+        $stmt = $this->conn->prepare("UPDATE animals SET vaccinated = 1, notes = CONCAT(notes, '\n', ?) WHERE name = ?");
+        $stmt->bind_param("ss", $note, $name);
+        $stmt->execute();
+    }   
+    
 }
 ?>

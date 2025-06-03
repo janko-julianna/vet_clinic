@@ -16,11 +16,11 @@
         case 'list':
             include "animallist.php";
             break;
-
+    
         case 'new':
             include "newanimal.php";
             break;
-
+    
         case 'add':
             $name = htmlspecialchars($_POST['name']);
             $species = htmlspecialchars($_POST['species']);
@@ -31,24 +31,36 @@
             $animalsModel->addAnimal($name, $species, $birthdate, $vaccinated, $next, $notes);
             header("Location: index.php");
             break;
-
-        case 'setVaccinated':
+    
+        case 'setVaccinated': 
             $name = htmlspecialchars($_GET['name']);
-            $animalsModel->setVaccinatedByName($name);
+            $animal = $animalsModel->getAnimalByName($name);
+            if (!$animal) {
+                die("Állat nem található: $name");
+            }
+            include "vaccinationform.php";  
+            break;
+    
+        case 'saveVaccination':
+            $name = htmlspecialchars($_POST['name']);
+            $type = htmlspecialchars($_POST['vaccine_type']);
+            $date = $_POST['vaccine_date'];
+            $note = "Oltás ($date): $type";
+            $animalsModel->addVaccinationNote($name, $note); 
             header("Location: index.php");
             break;
-
+    
         case 'delete':
             $name = htmlspecialchars($_GET['name']);
             $animalsModel->deleteAnimalByName($name);
             header("Location: index.php");
             break;
-
+    
         case 'checkup':
             $animal = $animalsModel->getAnimalByName(htmlspecialchars($_GET['name']));
             include "checkupform.php";
             break;
-
+    
         case 'saveCheckup':
             $name = htmlspecialchars($_POST['name']);
             $note = htmlspecialchars($_POST['checkup_note']);
@@ -57,7 +69,7 @@
             header("Location: index.php");
             break;
     }
-    ?>
+?>    
 </div>
 </body>
 </html>
